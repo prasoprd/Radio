@@ -26,20 +26,17 @@ public class Radio {
     }
 
     public static void play(View view, String link) {
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                try {
-                    Snackbar.make(view,"Preparing for playing", Snackbar.LENGTH_LONG).show();
-                    stop(null);
-                    player = new MediaPlayer();
-                    player.setAudioStreamType(AudioManager.STREAM_MUSIC);
-                    player.setDataSource(link);
-                    player.prepare();
-                    player.start();
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
+        new Thread(() -> {
+            try {
+                Snackbar.make(view,"Preparing for playing", Snackbar.LENGTH_LONG).show();
+                stop(null);
+                player = new MediaPlayer();
+                player.setAudioStreamType(AudioManager.STREAM_MUSIC);
+                player.setDataSource(link);
+                player.prepare();
+                player.start();
+            } catch (Exception e) {
+                e.printStackTrace();
             }
         }).start();
     }
